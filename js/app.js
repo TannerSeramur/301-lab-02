@@ -20,7 +20,6 @@ Horn.prototype.render = function() {
     let $hornContainer = $('div.clone');
     // console.log($hornContainer);
 
-
     // grabs inner html of section
     let $clonedHorn = $('#photo-template').html();
 
@@ -32,10 +31,9 @@ Horn.prototype.render = function() {
     $hornContainer.find('p').text(this.description);
     $hornContainer.attr('class', this.keyword);
 
-   
 
     // gets rid of class
-    $hornContainer.removeClass("clone");
+    // $hornContainer.removeClass("clone");
 };
 
 // function that reads json files and calls render function
@@ -59,7 +57,6 @@ const renderAllHorns = () => {
     addKeyword(allHorns);
     
 }
-
 
 readJson();
 
@@ -97,21 +94,4 @@ function handleFilter (event){
     })
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// $('select').append('<option> Narwhal </option>');
-
-// $('select').append('<option> Narwhal </option>');
 
