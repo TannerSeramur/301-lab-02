@@ -2,116 +2,141 @@
 
 // constructor function that pushes to array
 function Horn(hornObj){
-    this.image_url = hornObj.image_url;
-    this.title = hornObj.title;
-    this.description = hornObj.description;
-    this.keyword = hornObj.keyword;
-    this.horns = hornObj.horns;
+  this.image_url = hornObj.image_url;
+  this.title = hornObj.title;
+  this.description = hornObj.description;
+  this.keyword = hornObj.keyword;
+  this.horns = hornObj.horns;
 
-    allHorns.push(this);
+  allHorns.push(this);
 }
 
 // array for storing obj
-const allHorns = [];
+var allHorns = [];
 
-// prototype.render (renders 1 items)
 Horn.prototype.render = function() {
-    $('main').append('<div class = "clone" ></div>');
-    let $hornContainer = $('div.clone');
-    // console.log($hornContainer);
-
-
-    // grabs inner html of section
-    let $clonedHorn = $('#photo-template').html();
-
-    $hornContainer.html($clonedHorn);
-
-    $hornContainer.find('h2').text(this.title);
-    // console.log("this" + this);
-    $hornContainer.find('img').attr('src', this.image_url);
-    $hornContainer.find('p').text(this.description);
-    $hornContainer.attr('class', this.keyword);
-
-   
-
-    // gets rid of class
-    $hornContainer.removeClass("clone");
+  let source = $('#horn-animal-template').html();
+  let template = Handlebars.compile(source);
+  var html = template(this);
+  $('#photo-template').append(html);
 };
 
 // function that reads json files and calls render function
-let readJson = ()=>{
-    $.getJSON('./data/page-1.json', data => { 
-        // console.log(data);
-        data.forEach(element => {
-            new Horn(element);
-            // console.log(`here ${data[0].title}`);
-        })
-    }) .then(renderAllHorns);
-    
+let readJson = (sourceFile)=>{
+  $.getJSON(sourceFile, data => {
+    data.forEach(element => {
+      new Horn(element);
+    })
+  }) .then(renderAllHorns);
+
 }
 
 // function that renders all
 const renderAllHorns = () => {
-    allHorns.forEach(element => {
-        element.render();
-        console.log('element' + element);
-    })
-    addKeyword(allHorns);
-    
+  $('#photo-template').html(' ');
+  allHorns.forEach(element => {
+    element.render();
+  })
+  addKeyword(allHorns);
 }
 
 
-readJson();
+readJson('./data/page-1.json');
 
 // addes keywords to dropdown makes sure no repeat
 function addKeyword(arr){
-    const keywords = [];
-
-    arr.forEach(e =>{
-
-        if(keywords.includes(e.keyword)){
-            console.log('IN ARRAY!!!');           
-        }else{
-            console.log('adding to keywords arr');
-            
-            keywords.push(e.keyword);
-            $('select').append('<option value ='+e.keyword+ '>'+e.keyword+'</option>');
-            console.log('hii' + keywords);
-        }
-    })
+  const keywords = [];
+  arr.forEach(e =>{
+    if(keywords.includes(e.keyword)){
+    }else{
+      keywords.push(e.keyword);
+      $('.select').append('<option value ='+e.keyword+ '>'+e.keyword+'</option>');
+    }
+  })
 }
 
 
 $('.select').on('change', handleFilter);
 
 function handleFilter (event){
-    event.preventDefault();
-    $('div').hide();
-    var selectedValue = $('option:selected').val();
+  event.preventDefault();
+  $('div').hide();
+  var selectedValue = $(this).val();
 
-//add a loop to check each element
-    allHorns.forEach(element => {
-         if(selectedValue === element.keyword){
-            $(`div.${selectedValue}`).show();
-         }
-    })
+  allHorns.forEach(element => {
+    if(selectedValue === element.keyword){
+      $(`div.${selectedValue}`).show();
+    }
+    else if (selectedValue === 'default'){
+      $('div').show();
+    }
+  })
+}
+
+function initializeSelect() {
+  $('.select').html('');
+  $('.select').append('<option value="default"> choose filter </option>');
+
+  $('.sort option[value="default"]').prop('selected', true);
+ 
+}
+
+//add event listner to select
+$('.sort').on('change', sortAnimals);
+
+//sort the array
+function sortAnimals(){
+  let sorter = $(this).find(':selected').val();
+  console.log(logArray('horns'));
+  console.log(sorter, 'sorter');
+
+  allHorns.sort((a,b)=>{
+    if(sorter === 'names') {
+      return ( a['title'] > b['title'] ) ? 1 : ( a['title'] < b['title'] ) ? -1 : 0;
+    }
+    if(sorter === 'horns') {
+      return a['horns'] - b['horns'];
+    }
+  });
+  renderAllHorns();
+  console.log(logArray('title'));
+  console.log(logArray('horns'));
+}
+
+function logArray(prop) {
+  var s = '';
+  allHorns.forEach(e =>{
+    s += e[prop] + '\n';
+  });
+  return s;
 }
 
 
 
 
+//add event listener on the <ul>
+$('li').on('click', clickPageHandler);
+
+function clickPageHandler (event){
+  event.preventDefault();
+  let jsonFile = '';
+  var pageNum = $(this).html();
+  if (pageNum === 'Page 2'){
+    allHorns =[];
+    $('div').hide();
+    jsonFile = 'page-2.json';
+  }
+  else{
+    allHorns =[];
+    $('div').hide();
+    jsonFile = 'page-1.json';
+  }
+  
+  readJson(`./data/${jsonFile}`);
+  initializeSelect();
+}
+
+clickPageHandler();
 
 
-
-
-
-
-
-
-
-
-
-// $('select').append('<option> Narwhal </option>');
-
-// $('select').append('<option> Narwhal </option>');
 

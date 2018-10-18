@@ -48,3 +48,8 @@ p{
 footer{
     clear: both;
 }
+
+
+ul li {
+    margin: 10px;
+}
