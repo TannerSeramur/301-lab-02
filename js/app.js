@@ -15,6 +15,7 @@ function Horn(hornObj){
 var allHorns = [];
 
 Horn.prototype.render = function() {
+
   let source = $('#horn-animal-template').html();
   let template = Handlebars.compile(source);
   var html = template(this);
@@ -41,7 +42,9 @@ const renderAllHorns = () => {
 }
 
 
+
 readJson('./data/page-1.json');
+
 
 // addes keywords to dropdown makes sure no repeat
 function addKeyword(arr){
@@ -76,7 +79,6 @@ function handleFilter (event){
 function initializeSelect() {
   $('.select').html('');
   $('.select').append('<option value="default"> choose filter </option>');
-
   $('.sort option[value="default"]').prop('selected', true);
  
 }
@@ -137,6 +139,7 @@ function clickPageHandler (event){
 }
 
 clickPageHandler();
+
 
 
 
