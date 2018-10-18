@@ -2,18 +2,13 @@
 
 <!DOCTYPE html>
 <html>
-  <nav>
-    <ul class="pages">
-      <li >Page 1</li>
-      <li >Page 2</li>
-    </ul>
-  </nav>
   <head>
     <title>The Gallery of Horns</title>
     <meta name="301-lab-02" content="jQuery Selectors and Events">
     <link rel="stylesheet" href="css/reset.css">
+    <link href="https://fonts.googleapis.com/css?family=Merienda" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
-   
+
     <script id="horn-animal-template" type="text/x.handlebars-template">
       <div class="{{keyword}}">
           <h2>{{title}}</h2>
@@ -25,7 +20,14 @@
   </head>
   <body>
     <header>
+        <nav>
+            <ul class="pages">
+              <li >Page 1</li>
+              <li >Page 2</li>
+            </ul>
+          </nav>
       <h1>The Gallery of Horns</h1>
+      <div>
         <select class="select">
             <option>Filter by Keyword</option>
         </select>
@@ -34,6 +36,7 @@
             <option value="horns">Sort by horns</option>
             <option value="names">Sott by name</option>
         </select>
+      </div>
     </header>
 
     <main>

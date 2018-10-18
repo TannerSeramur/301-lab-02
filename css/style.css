@@ -1,9 +1,27 @@
 *{
-    font-family: Arial, Helvetica, sans-serif;
+
+    box-sizing: border-box;
+}
+
+html, body {
+    font-family: 'Merienda', cursive;
+    height: 100%;
+}
+
+header {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+}
+
+header > div {
+    display: flex;
+    flex-direction: row;
 }
 
 h1{
-    text-align: center;
+    /* text-align: center; */
     font-size: 3em;
     font-weight: bold;
 }
@@ -17,7 +35,8 @@ body>main{
 }
 
 select {
-    margin: 10px 0 10px 45%;
+    /* margin: 10px 0 10px 45%; */
+    margin: 30px;
 }
 
 img{
@@ -26,18 +45,23 @@ img{
 }
 
 section{
-    width: 80%;
-    margin: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
 }
 
-
-div{
-    float: left;
-    padding: 5px;
+main div {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    /* float: left; */
+    /* padding: 5px; */
     width: 200px;
     height: 300px;
     background-color: #f1f1f1;
-    margin: 5px;
+    margin: 15px;
 }
 
 h2{
@@ -54,6 +78,19 @@ footer{
 }
 
 
+ul {
+    display: flex;
+    flex-direction: row;
+    align-content: start;
+}
+
+
 ul li {
+    background-color: rgb(66, 65, 65);
+    color: white;
+    height: 50px;
+    line-height: 50px;
     margin: 10px;
+    padding: 10px;
+    width: 100px;
 }
