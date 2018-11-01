@@ -28,7 +28,8 @@ let readJson = (sourceFile)=>{
     data.forEach(element => {
       new Horn(element);
     })
-  }) .then(renderAllHorns);
+  }).then(sortAnimals);
+    // .then(renderAllHorns);
 
 }
 
@@ -80,7 +81,7 @@ function initializeSelect() {
   $('.select').html('');
   $('.select').append('<option value="default"> choose filter </option>');
   $('.sort option[value="default"]').prop('selected', true);
- 
+
 }
 
 //add event listner to select
@@ -88,8 +89,9 @@ $('.sort').on('change', sortAnimals);
 
 //sort the array
 function sortAnimals(){
-  let sorter = $(this).find(':selected').val();
-  console.log(logArray('horns'));
+  let sorter = ($(this).find(':selected').val()) ? $(this).find(':selected').val() : 'names';
+
+  // console.log(logArray('horns'));
   console.log(sorter, 'sorter');
 
   allHorns.sort((a,b)=>{
@@ -101,8 +103,8 @@ function sortAnimals(){
     }
   });
   renderAllHorns();
-  console.log(logArray('title'));
-  console.log(logArray('horns'));
+  // console.log(logArray('title'));
+  // console.log(logArray('horns'));
 }
 
 function logArray(prop) {
@@ -124,7 +126,7 @@ function clickPageHandler (event){
   let jsonFile = '';
   var pageNum = $(this).html();
   if (pageNum === 'Page 2'){
-    allHorns =[];
+    allHorns = [];
     $('div').hide();
     jsonFile = 'page-2.json';
   }
@@ -133,7 +135,7 @@ function clickPageHandler (event){
     $('div').hide();
     jsonFile = 'page-1.json';
   }
-  
+
   readJson(`./data/${jsonFile}`);
   initializeSelect();
 }
